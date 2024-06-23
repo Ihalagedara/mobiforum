@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h2>Questions</h2>
+    <form method="GET" action="{{ url_for('index') }}">
+        <input type="text" name="q" placeholder="Search for questions" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+    <ul>
+        {% for question in questions %}
+        <li>
+            <a href="{{ url_for('question', question_id=question[0]) }}">{{ question[1] }}</a>
+            {% if question[3] %}
+            <br>
+            <img src="{{ url_for('static', filename='uploads/' + question[3]) }}" alt="Question Image" width="150">
+            {% endif %}
+            <p>{{ question[2][:100] }}...</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

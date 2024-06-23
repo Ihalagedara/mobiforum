@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ question[1] }}{% endblock %}
+{% block content %}
+    <h2>{{ question[1] }}</h2>
+    <p>{{ question[2] }}</p>
+
+    {% if question[3] %}
+    <img src="{{ url_for('static', filename='uploads/' + question[3]) }}" alt="Question Image" width="300">
+    {% endif %}
+
+    <h3>Answers</h3>
+    <ul>
+        {% for answer in answers %}
+        <li>
+            {{ answer[1] }}
+            {% if answer[2] %}
+            <br>
+            <img src="{{ url_for('static', filename='uploads/' + answer[2]) }}" alt="Answer Image" width="200">
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Your Answer</h3>
+    <form method="POST" enctype="multipart/form-data">
+        <textarea name="answer" required></textarea>
+        <br>
+        <label for="image">Attach Image:</label>
+        <input type="file" id="image" name="image">
+        <br>
+        <button type="submit">Submit Answer</button>
+    </form>
+
+    <form method="POST" action="{{ url_for('delete_question', question_id=question[0]) }}">
+        <button type="submit">Delete Question</button>
+    </form>
+{% endblock %}
